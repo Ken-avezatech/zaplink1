@@ -1,0 +1,33 @@
+{
+  "name": "magens",
+  "version": "0.0.1",
+  "description": "Boilerplate for creating new projects",
+  "main": "back-end/server.js",
+  "devDependencies": {},
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.14.2",
+    "chalk": "^1.1.1",
+    "compression": "^1.6.0",
+    "express": "^4.13.3",
+    "jwt-simple": "^0.4.0",
+    "method-override": "^2.3.5",
+    "moment": "^2.11.1",
+    "mongoose": "^4.3.4",
+    "mongoose-deep-populate": "^2.0.3",
+    "mongoose-timestamp": "^0.4.0",
+    "morgan": "^1.6.1",
+    "socket.io": "^1.4.5",
+    "twilio": "^2.8.0"
+  },
+  "scripts": {
+    "start": "nodemon back-end/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/caninojories/magens_boilerplate.git"
+  },
+  "author": "Jo-Ries P. Canino",
+  "license": "MIT",
+  "homepage": "https://github.com/caninojories/magens_boilerplate"
+}
