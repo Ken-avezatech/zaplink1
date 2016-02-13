@@ -28,49 +28,21 @@
       status: err.status || 500
     });
   });
-  // app.use('*', catchAll);
 
   /*io.cluster Configuration*/
-  // var sticky = require('sticky-session');
+  var sticky = require('sticky-session');
 
+  let server = io.http.createServer(app);
+  global.socket_io = require('socket.io')(server, {pingTimeout: 3000, pingInterval: 3000});
 
-let server = io.http.createServer(app);
-global.socket_io = require('socket.io')(server);
-
-server.listen(app.get('port'), function() {
-  console.log("Listening to port: " + app.get('port'));
-});
-
-global.socket_io.on('connection', io.socket);
-
-  // if (!sticky.listen(server, io.port)) {
-  //   // Master code
-  //   server.on('listening', function() {
-  //     console.log('server started on port ' + io.port);
-  //   });
-  // } else {
-  //   global.socket_io = require('socket.io')(server);
-  //   global.socket_io.on('connection', io.socket);
-  //   console.log('worker');
-  //   if (io.cluster.isMaster) {
-  //     io.clusterService(io);
-  //   }
-  // }
-
-  // if (io.cluster.isMaster) {io.clusterService(io);}
-  // else {
-  //   let server = io.http.createServer(app);
-  //   let socket_io = require('socket.io')(server);
-  //
-  //   server.listen(io.port, function() {
-  //     console.log(io.chalk.red.reset.underline('listening to port ') +
-  //     io.chalk.cyan.bold((io.port)));
-  //   });
-  //
-  //   socket_io.on('connection', function(socket) {
-  //     console.log('connected');
-  //   });
-  // }
+  if (!sticky.listen(server, io.port)) {
+    server.once('listening', function() {
+      console.log('server started on port ' + io.port);
+    });
+  } else {
+    console.log('worker');
+    global.socket_io.on('connection', io.socket);
+  }
 
   /*close our connection when the app stop*/
   process.on('SIGINT', function() {
