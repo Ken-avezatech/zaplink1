@@ -29,7 +29,6 @@
     moment            : require('moment'),
     mongoose          : Promise.promisifyAll(mongoose),
     numCPUs           : require('os').cpus().length,
-    Promise           : require('bluebird'),
     twilio            : require('twilio')('AC72169b036fd2212a0149b38b177ed346', 'dab44462debfa35fdc1acc2e2991a0b2'),
     LookupsClient     : require('twilio').LookupsClient,
     url               : require('url'),
