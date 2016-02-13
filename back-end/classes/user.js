@@ -152,18 +152,6 @@
                 user.lastName   = query.lastName;
                 user.birthdate  = query.birthdate;
 
-                // socket.join('joriescanino');
-                //
-                // setTimeout(function() {
-                //   socket.in('joriescanino').emit('sample', {data: 'SAMPLEIN'});
-                //   socket.to('joriescanino').emit('sample', {data: 'SAMPLETO'});
-                //   socket.emit('sample', {data: 'SAMPLEEMIT'});
-                //   socket.broadcast.to('joriescanino').emit('sample', {data: 'BroadcastTO'});
-                //   socket.broadcast.in('joriescanino').emit('sample', {data:'BroadcastIn'});
-                //   socket_io.to('joriescanino').emit('sample', {data: 'GlobalSOCKETTO'});
-                //   socket_io.in('joriescanino').emit('sample', {data:'GlobalSOCKETIN'});
-                // }, 2000);
-
                 user.save(function(error) {
                   console.log(error);
                   if (error) {return reject(error);}
