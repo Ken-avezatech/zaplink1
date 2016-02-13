@@ -1,7 +1,7 @@
 {
-  "name": "magens",
+  "name": "zaplink",
   "version": "0.0.1",
-  "description": "Boilerplate for creating new projects",
+  "description": "ZapLink Admin",
   "main": "back-end/server.js",
   "devDependencies": {},
   "dependencies": {
