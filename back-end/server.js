@@ -34,15 +34,14 @@
 
   let server = io.http.createServer(app);
   global.socket_io = require('socket.io')(server, {pingTimeout: 3000, pingInterval: 3000});
+  server.listen(io.port, function() {
+    /*TODO*/
+    /**
+      * Make the cluster for socket.io effective using cluster in the future
+      */
+  });
 
-  if (!sticky.listen(server, io.port)) {
-    server.once('listening', function() {
-      console.log('server started on port ' + io.port);
-    });
-  } else {
-    console.log('worker');
-    global.socket_io.on('connection', io.socket);
-  }
+  global.socket_io.on('connection', io.socket);
 
   /*close our connection when the app stop*/
   process.on('SIGINT', function() {
