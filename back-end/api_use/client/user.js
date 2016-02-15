@@ -17,6 +17,23 @@
         })
     });
 
+  app.route('/delete')
+    .delete(function(req, res, next) {
+      let query   = io.url.parse(req.url, true).query;
+
+      io.User
+        .findOne({'phone.number': query.phoneNumber})
+        .exec()
+        .then(function(user) {
+          user.remove();
+
+          res.json({
+            message : 'Removing number after unsuccesful message from twilio(incoming)',
+            status  : 200
+          })
+        });
+    })
+
   app.route('/profile/photo')
     .post(function(req, res, next) {
       let User = new io.USER(req, res, next);
