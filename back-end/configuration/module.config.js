@@ -29,7 +29,7 @@
     moment            : require('moment'),
     mongoose          : Promise.promisifyAll(mongoose),
     numCPUs           : require('os').cpus().length,
-    twilio            : require('twilio')('AC72169b036fd2212a0149b38b177ed346', 'dab44462debfa35fdc1acc2e2991a0b2'),
+    twilio            : require('twilio')('AC8c5399f2677eeba0739034677e506440', 'bf3fff39aa088fbb9eae2785446d42a1'),
     LookupsClient     : require('twilio').LookupsClient,
     url               : require('url'),
 
