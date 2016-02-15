@@ -73,7 +73,6 @@
                 .catch(function(error) {
                   reject(error);
                 })
-
             }
           });
 
@@ -176,11 +175,7 @@
           })
           .exec()
           .then(function(user) {
-            if (user) {
-              resolve(user);
-            } else {
-              resolve(user);
-            }
+            resolve(user);
           });
       });
     }
@@ -240,19 +235,6 @@
              * so that we will not send a sms verification
              */
             if (!user) {
-              /* save the number for our reference
-               * when the user clear and stop the application
-               */
-
-              // var user = new io.User({
-              //   phone: {
-              //     number      : query.phoneNumber,
-              //     verification: code,
-              //   }
-              // });
-              //
-              // user.save()
-
               io.twilio
                 .messages
                 .create({
@@ -288,12 +270,62 @@
                   });
                 });
             } else {
-              /* user phoneNumber is already use
+              /**
+               * user phoneNumber is already use
                * don't send phone number verification
                */
 
-            }
+              /*test if the user is approved*/
+              /**
+               * we want this because to test if the user registered but
+               * the user decided to close the application
+               */
+              if (user.phone.status === 'approved') {
+                /*this will used so that the app will go to the chat tabs*/
+                /**
+                 * After the user clear the cache and stop the application
+                 */
+                resolve(user);
+              } else {
+                /*delete the entry of the user*/
+                user.remove();
+                /*register the code*/
+                io.twilio
+                  .messages
+                  .create({
+                    to  : '+' + query.phoneNumber,
+                    from: io.config.twilioNumber,
+                    body: 'Your ZaplLink Verification code is: ' + code
+                  }, function(error, responseData) {
+                    if (error) {
+                      return reject(error);
+                    }
 
+                    /* save the number */
+                    let user = io.User({
+                      phone: {
+                        number          : query.phoneNumber,
+                        verificationCode: code
+                      }
+                    });
+
+                    user.save(function(error) {
+                      if (error) {
+                        return reject(error);
+                      }
+
+                      USER.createToken(user)
+                        .then(function(token) {
+                          return resolve({
+                            token           : token,
+                            response        : responseData,
+                            verificationCode: code
+                          });
+                        });
+                    });
+                  });
+              }
+            }
           });
       });
     }
@@ -326,9 +358,6 @@
               resolve('success');
             });
           });
-
-
-
       });
     }
 
