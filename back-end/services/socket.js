@@ -9,18 +9,13 @@
     });
 
     socket.on('saveUserId', function(id) {
-      console.log('SAVEUSERID');
       socket.join(id);
-      // clients[id] = socket;
-      // console.log(clients);
-      // clients[id] = socket;
+
       io.User
         .findById(id)
         .exec()
         .then(user => {
-          console.log(user);
           user.rooms.forEach(room => {
-            console.log(room);
             socket.join(room);
           })
         });
