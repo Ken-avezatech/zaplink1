@@ -270,11 +270,6 @@
                   });
                 });
             } else {
-              /**
-               * user phoneNumber is already use
-               * don't send phone number verification
-               */
-
               /*test if the user is approved*/
               /**
                * we want this because to test if the user registered but
@@ -285,6 +280,11 @@
                 /**
                  * After the user clear the cache and stop the application
                  */
+
+                 /**
+                  * user phoneNumber is already use
+                  * don't send phone number verification
+                  */
                 resolve(user);
               } else {
                 /*delete the entry of the user*/
