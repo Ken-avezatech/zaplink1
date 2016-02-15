@@ -258,7 +258,7 @@
                 .create({
                   to  : '+' + query.phoneNumber,
                   from: io.config.twilioNumber,
-                  body: code
+                  body: 'Your ZaplLink Verification code is: ' + code
                 }, function(error, responseData) {
                   if (error) {
                     return reject(error);
@@ -280,8 +280,9 @@
                     USER.createToken(user)
                       .then(function(token) {
                         return resolve({
-                          token    : token,
-                          response : responseData
+                          token           : token,
+                          response        : responseData,
+                          verificationCode: code
                         });
                       });
                   });
