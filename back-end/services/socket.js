@@ -43,14 +43,20 @@
     });
 
     socket.on('makingAnAnswer', function(data) {
-      tempSocket.to(data.otherID).emit('receiving_an_answer', data);
+      tempSocket.to(data.otherID).emit('receivingAnAnswer', data);
     });
 
-    socket.on('reject', function(data) {
-      console.log('REJECT');
+    socket.on('rejectFromCaller', function(data) {
+      console.log('rejectFromCaller');
       console.log(data);
-      clients[data.otherID].emit('reject', data);
-    })
+      tempSocket.to(data.otherID).emit('rejectFromCaller', data);
+    });
+
+    socket.on('rejectFromCallee', function(data) {
+      console.log('rejectFromCallee');
+      console.log(data);
+      tempSocket.to(data.otherID).emit('rejectFromCallee', data);
+    });
 
     socket.on('callee_is_ringing', function(data) {
       // clients[data.otherID].emit('callee_is_ringing');
@@ -58,7 +64,7 @@
     });
 
     socket.on('calleeIsRingingAccepted', function(data) {
-      clients[data.otherID].emit('calleeIsRingingAccepted');
+      tempSocket.to(data.otherID).emit('calleeIsRingingAccepted');
     });
 
     /*set the socket*/
