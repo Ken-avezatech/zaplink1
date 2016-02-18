@@ -235,16 +235,17 @@
              * so that we will not send a sms verification
              */
             if (!user) {
+              console.log("USER unknown")
               io.twilio
                 .messages
                 .create({
                   to  : '+' + query.phoneNumber,
                   from: io.config.twilioNumber,
-                  body: 'Your ZaplLink Verification code is: ' + code
+                  body: 'Your ZapLink Verification code is: ' + code
                 }, function(error, responseData) {
                   if (error) {
                     return reject(error);
-                  }
+                  }//comment when testing local
 
                   /* save the number */
                   let user = io.User({
@@ -263,12 +264,12 @@
                       .then(function(token) {
                         return resolve({
                           token           : token,
-                          response        : responseData,
+                          response        : responseData,//comment when testing local
                           verificationCode: code
                         });
                       });
                   });
-                });
+                });//comment when testing local
             } else {
               /*test if the user is approved*/
               /**
@@ -295,7 +296,7 @@
                   .create({
                     to  : '+' + query.phoneNumber,
                     from: io.config.twilioNumber,
-                    body: 'Your ZaplLink Verification code is: ' + code
+                    body: 'Your ZapLink Verification code is: ' + code
                   }, function(error, responseData) {
                     if (error) {
                       return reject(error);
