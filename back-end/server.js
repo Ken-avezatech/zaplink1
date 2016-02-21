@@ -33,7 +33,7 @@
   var sticky = require('sticky-session');
 
   let server = io.http.createServer(app);
-  global.socket_io = require('socket.io')(server, {pingTimeout: 3000, pingInterval: 3000});
+  global.socket_io = require('socket.io')(server, {pingTimeout: 3000, pingInterval: 5000});
   server.listen(io.port, function() {
     /*TODO*/
     /**
