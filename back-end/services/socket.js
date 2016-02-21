@@ -4,6 +4,24 @@
     let tempSocket = socket;
     console.log('client connected');
 
+    socket.emit('getUserIdAfterDisconnection');
+
+    socket.on('sendUserIdAfterDisconnection', function(id) {
+      console.log(id);
+      if (id) {
+        socket.join(id);
+
+        io.User
+          .findById(id)
+          .exec()
+          .then(user => {
+            user.rooms.forEach(room => {
+              socket.join(room);
+            })
+          });
+      }
+    });
+
     socket.on('disconnect', function() {
       console.log('disconnect');
     });
