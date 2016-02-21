@@ -236,16 +236,16 @@
              */
             if (!user) {
               console.log("USER unknown")
-              io.twilio
-                .messages
-                .create({
-                  to  : '+' + query.phoneNumber,
-                  from: io.config.twilioNumber,
-                  body: 'Your ZapLink Verification code is: ' + code
-                }, function(error, responseData) {
-                  if (error) {
-                    return reject(error);
-                  }//comment when testing local
+              // io.twilio
+              //   .messages
+              //   .create({
+              //     to  : '+' + query.phoneNumber,
+              //     from: io.config.twilioNumber,
+              //     body: 'Your ZapLink Verification code is: ' + code
+              //   }, function(error, responseData) {
+              //     if (error) {
+              //       return reject(error);
+              //     }//comment when testing local
 
                   /* save the number */
                   let user = io.User({
@@ -264,12 +264,12 @@
                       .then(function(token) {
                         return resolve({
                           token           : token,
-                          response        : responseData,//comment when testing local
+                          // response        : responseData,//comment when testing local
                           verificationCode: code
                         });
                       });
                   });
-                });//comment when testing local
+                // });//comment when testing local
             } else {
               /*test if the user is approved*/
               /**
