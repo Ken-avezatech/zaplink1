@@ -94,15 +94,17 @@ module.exports = function(socket) {
 
   socket.on('sendMessage', function(data) {
     let message = {};
-    message.message = data.message;
-    message.id      = data.currentUserId;
+    message.message     = data.message;
+    message.id          = data.currentUserId;
+    message.roomId      = data.roomId;
+    message.otherUserId = data.otherUserId;
 
     if (!!!data.room) {
       tempSocket.to(data.otherUserId).emit('sendMessage', message);
-      socket.emit('sendMessage', message);
+      // socket.emit('sendMessage', message);
     } else {
       tempSocket.to(data.roomId).emit('sendMessage', message);
-      socket.emit('sendMessage', message);
+      // socket.emit('sendMessage', message);
     }
   });
 };
