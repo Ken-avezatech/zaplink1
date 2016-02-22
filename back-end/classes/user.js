@@ -17,6 +17,8 @@
           .checkIfNumberIsAlreadySaved(query)
           .then(function(user) {
             let otherUser = user;
+            console.log('USERRRRRRRRRRR');
+            console.log(user);
             if (user) {
               USER
                 .token(self)
@@ -171,10 +173,10 @@
       return new Promise(function(resolve, reject) {
         io.User
           .findOne({
-            'phone.number': query.phoneNumber
+            'phone.number': parseInt(query.phoneNumber)
           })
           .exec()
-          .then(function(user) {
+          .then(function(user, data) {
             resolve(user);
           });
       });
