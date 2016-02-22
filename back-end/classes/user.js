@@ -176,7 +176,7 @@
             'phone.number': parseInt(query.phoneNumber)
           })
           .exec()
-          .then(function(user, data) {
+          .then(function(user) {
             resolve(user);
           });
       });
