@@ -20,7 +20,7 @@
             /*check if this user already have a history room*/
             io.UserRooms
               .findOne({members: {
-                $in: [id, query.otherContactId]
+                $all: [id, query.otherContactId]
               }})
               .exec()
               .then(function(room) {
