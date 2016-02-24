@@ -6,7 +6,13 @@ module.exports = function(socket) {
 
   socket.emit('getUserIdAfterDisconnection');
 
-  socket.on('sendUserIdAfterDisconnection', function(id) {
+  socket.on('disconnect', function() {
+    console.log('disconnect');
+  });
+
+  socket.on('saveUserId', function(id) {
+    console.log('saveUserId');
+    console.log(id);
     if (id) {
       socket.join(id);
 
@@ -21,23 +27,6 @@ module.exports = function(socket) {
     }
   });
 
-  socket.on('disconnect', function() {
-    console.log('disconnect');
-  });
-
-  socket.on('saveUserId', function(id) {
-    socket.join(id);
-
-    io.User
-      .findById(id)
-      .exec()
-      .then(user => {
-        user.rooms.forEach(room => {
-          socket.join(room);
-        })
-      });
-  });
-
   socket.on('completed', function(data) {
     tempSocket.to(data.otherID).emit('completed', data);
   });
@@ -49,9 +38,17 @@ module.exports = function(socket) {
   socket.on('making_a_call', function(data) {
     tempSocket.to(data.otherID).emit('receiving_a_call', data);
   });
+  
+  socket.on('makingACallForNegotiation', function(data) {
+    tempSocket.to(data.otherID).emit('receivingACallForNegotiation', data);
+  });
 
   socket.on('makingAnAnswer', function(data) {
     tempSocket.to(data.otherID).emit('receivingAnAnswer', data);
+  });
+
+  socket.on('makingAnAnswerForNegotiation', function(data) {
+    tempSocket.to(data.otherID).emit('receivingAnAnswerForNegotiation', data);
   });
 
   socket.on('rejectFromCaller', function(data) {
@@ -80,31 +77,27 @@ module.exports = function(socket) {
     socket_io.to(otherUserId).emit('initializeRoomConnection', data);
   });
 
-  socket.on('joinRoom', function(data) {
-    socket.join(data.roomId);
-
-    let message = {};
-    message.message = data.message;
-    message.id      = data.currentUserId;
-
-    setTimeout(function() {
-      socket_io.to(data.roomId).emit('sendMessage', message);
-    }, 0);
-  });
-
   socket.on('sendMessage', function(data) {
     let message = {};
     message.message     = data.message;
     message.id          = data.currentUserId;
     message.roomId      = data.roomId;
     message.otherUserId = data.otherUserId;
+    message.room        = data.room;
 
+    console.log(data);
     if (!!!data.room) {
       tempSocket.to(data.otherUserId).emit('sendMessage', message);
       // socket.emit('sendMessage', message);
     } else {
-      tempSocket.to(data.roomId).emit('sendMessage', message);
+      socket.to(data.roomId).emit('sendMessage', message);
       // socket.emit('sendMessage', message);
     }
+  });
+
+  socket.on('joinRoom', function(data) {
+    console.log('joinRoom');
+    console.log(data);
+    socket.join(data.roomId);
   });
 };
