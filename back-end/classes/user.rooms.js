@@ -52,7 +52,8 @@
 
                         resolve({
                           message : 'Saving the message',
-                          status  : 200
+                          status  : 200,
+                          roomId  : room._id
                         });
 
                         return;
@@ -99,7 +100,8 @@
 
                               resolve({
                                 message : 'Saving the message',
-                                status  : 200
+                                status  : 200,
+                                roomId  : room._id
                               });
                             } else {
                               /*meaning we dont have any yesterday messages yet*/
@@ -121,7 +123,8 @@
 
                               resolve({
                                 message : 'Saving the message',
-                                status  : 200
+                                status  : 200,
+                                roomId  : room._id
                               });
                             }
                           });
@@ -153,7 +156,7 @@
                             resolve({
                               message : 'Message',
                               status  : 200,
-                              // data    : messageList
+                              roomId  : room._id
                             });
                           });
                       }
