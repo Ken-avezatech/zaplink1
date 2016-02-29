@@ -35,6 +35,7 @@
                     })
                     .exec()
                     .then(function(nowMessage) {
+                      console.log(nowMessage);
                       /*test if we have nowMessage meaning*/
                       /*there is not messag attached for today for many days or so*/
                       if (!nowMessage) {
@@ -228,9 +229,73 @@
           });
       });
     }
+
+    getRoom() {
+      let self    = this;
+      let query   = io.url.parse(self.req.url, true).query;
+      let userId  = null;
+
+      return new Promise(function(resolve, reject) {
+        User
+          .token(self)
+          .then(function(id) {
+            userId = id;
+            return UserRooms.getRoomId(id, query);
+          })
+          .then(function(roomId) {
+            if (roomId) {
+              self.req.url = self.req.url + '&roomId=' + roomId;
+              /**
+               * Get the Message List
+               */
+              let UserMessages   = new io.User_Messages(self.req, self.res, self.next);
+
+              UserMessages
+                .messageList()
+                .then(function(list) {
+                  resolve({
+                    message : 'Getting List',
+                    status  : 200,
+                    data    : {
+                      messageList : list.data,
+                      roomId      : roomId
+                    }
+                  });
+                })
+                .catch(function(error) {
+                  reject(error);
+                });
+            } else {
+              resolve({
+                message: 'Getting Room ID',
+                status  : 200
+              });
+            }
+          })
+          .catch(function(err) {
+            console.log(err);
+            reject(err);
+          })
+      });
+    }
+
+    static getRoomId(id, query) {
+      return new Promise(function(resolve, reject) {
+        io.UserRooms
+          .findOne({
+            members: {
+              $all: [id, query.otherContactId]
+            }
+          })
+          .exec()
+          .then(function(room) {
+            if (room) {return resolve(room.id);}
+
+            resolve(room);
+          });
+      });
+    }
   }
-
-
 
   module.exports = UserRooms;
 }());
