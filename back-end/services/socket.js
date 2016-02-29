@@ -9,8 +9,6 @@ module.exports = function(socket) {
   });
 
   socket.on('saveUserId', function(id) {
-    console.log('saveUserId');
-    console.log(id);
     if (id) {
       socket.join(id);
 
@@ -83,7 +81,6 @@ module.exports = function(socket) {
     message.otherUserId = data.otherUserId;
     message.room        = data.room;
 
-    console.log(data);
     if (!!!data.room) {
       tempSocket.to(data.otherUserId).emit('sendMessage', message);
       // socket.emit('sendMessage', message);
@@ -94,8 +91,6 @@ module.exports = function(socket) {
   });
 
   socket.on('joinRoom', function(data) {
-    console.log('joinRoom');
-    console.log(data);
     socket.join(data.roomId);
   });
 };
