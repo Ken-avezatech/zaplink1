@@ -4,8 +4,6 @@ module.exports = function(socket) {
   let tempSocket = socket;
   console.log('client connected');
 
-  socket.emit('getUserIdAfterDisconnection');
-
   socket.on('disconnect', function() {
     console.log('disconnect');
   });
@@ -38,7 +36,7 @@ module.exports = function(socket) {
   socket.on('making_a_call', function(data) {
     tempSocket.to(data.otherID).emit('receiving_a_call', data);
   });
-  
+
   socket.on('makingACallForNegotiation', function(data) {
     tempSocket.to(data.otherID).emit('receivingACallForNegotiation', data);
   });
