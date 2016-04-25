@@ -39,6 +39,7 @@
     /**
       * Make the cluster for socket.io effective using cluster in the future
       */
+      console.log('listening in port: ' + io.port);
   });
 
   global.socket_io.on('connection', io.socket);
