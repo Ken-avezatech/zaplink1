@@ -250,7 +250,7 @@
                   let user = io.User({
                     phone: {
                       number          : query.phoneNumber,
-                      verificationCode: code
+                      verificationCode: '11111' || code/*hard coded it for now*/
                     }
                   });
 
@@ -264,7 +264,7 @@
                         return resolve({
                           token           : token,
                           // response        : responseData,//comment when testing local
-                          verificationCode: code
+                          verificationCode: '11111' || code/*hard coded it for now*/
                         });
                       });
                   });
@@ -305,7 +305,7 @@
                     let user = io.User({
                       phone: {
                         number          : query.phoneNumber,
-                        verificationCode: code
+                        verificationCode: '11111' || code/*hard coded it for now*/
                       }
                     });
 
@@ -319,7 +319,7 @@
                           return resolve({
                             token           : token,
                             response        : responseData,
-                            verificationCode: code
+                            verificationCode: '11111' || code/*hard coded it for now*/
                           });
                         });
                     });
