@@ -150,6 +150,8 @@
                 user.firstName  = query.firstName;
                 user.lastName   = query.lastName;
                 user.birthdate  = query.birthdate;
+                user.device.id  = query.device.id;
+                user.device.token = query.device.token;
 
                 user.save(function(error) {
                   console.log(error);

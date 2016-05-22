@@ -14,6 +14,10 @@
     birthdate   : Date,
     photo       : String,
     socket      : {},
+    device      : {
+      id: String,
+      token: String
+    }
     phone       : {
       number  : {
         type  : Number,
